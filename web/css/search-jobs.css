@@ -157,6 +157,9 @@ outline: none;
 	ol.search-results > li > table > tbody > tr > td.first a h4{
   font-size: 1.0em;
 	}
+	div.navbar-header > a.navbar-brand > img {
+	  height: 20px;
+	}
 }
 
 /*
