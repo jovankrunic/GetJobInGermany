@@ -1,6 +1,9 @@
 # htaccess
 /web/.htaccess
 
+# Dev environment
+/web/app_dev.php
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
