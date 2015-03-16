@@ -397,6 +397,7 @@ ul.latest-jobs li {
 }
 
 .bordered-with-header ul.latest-jobs li span.position {
+	text-transform: uppercase;
 }
 
 /* Pagination */
