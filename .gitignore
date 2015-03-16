@@ -4,6 +4,11 @@
 # Dev environment
 # /web/app_dev.php
 
+# Temp files
+*.swp
+*.swo
+*~
+
 # Cache and logs (Symfony2)
 /app/cache/*
 /app/logs/*
