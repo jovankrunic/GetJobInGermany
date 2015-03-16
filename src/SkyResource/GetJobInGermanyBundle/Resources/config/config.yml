@@ -1,0 +1,6 @@
+# src/SkyResource/GetJobInGermanyBundle/Resources/config/config.yml
+parameters:
+    # Blogger contact email address
+    getjobingermany.emails.contact_email: contact@getjobingermany.skyresource.com
+    getjobingermany.jobs.latest_job_limit: 6
+    getjobingermany.jobs.jobs_per_page: 30

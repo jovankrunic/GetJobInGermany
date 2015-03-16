@@ -1,0 +1,22 @@
+		  <form class="form-inline" action="{{ path('GetJobInGermanyBundle_search', {'category':category}) }}" method="get" {{ form_enctype(form) }}>
+		    	<div class="row big-labels">
+				  <div class="col-sm-6">
+					<h4>Keyword (in German)</h4>
+				  </div>
+				  <div class="col-sm-4">
+					<h4>Location</h4>
+				  </div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 col-sm-5">
+					{{ form_row(form.keyword, {'attr': {'class': 'form-control', 'placeholder': 'What?', 'autocomplete': 'off' }}) }}
+					</div>
+					<div class="form-group col-sm-4">
+          {{ form_row(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Where?', 'autocomplete': 'off' }}) }}
+					</div>
+					{{ form_rest(form) }}
+			    <div class="form-group col-sm-2">
+			    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
+			    </div>
+				</div>
+		  </form>

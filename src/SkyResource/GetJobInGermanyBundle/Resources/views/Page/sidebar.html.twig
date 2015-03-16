@@ -1,0 +1,28 @@
+{# src/SkyResource/GetJobInGermanyBundle/Resources/views/Page/sidebar.html.twig #}
+          <div class="sidebar-module bordered-with-header green">
+            <a class="top" href="{{ path('GetJobInGermanyBundle_search') }}"><h4><span class="glyphicon glyphicon-apple"></span>&nbsp;Fresh jobs</h4></a>
+              <ul class="latest-jobs">
+{% for job in latestJobs %}
+                <li>
+                  <a href="{{ path('GetJobInGermanyBundle_show',{'id':job.id,'slug':job.slug}) }}" title="{{ job.title }}">
+                    <span class="position">{{ job.title }}</span></a><br />
+                    <span class="company">at {{ job.company }}</span><br />
+                    <span class="location">in {{ job.city }}</span><br />
+                    <span class="date" title="published">Published: {{ job.publishedDate|created_ago }}</span><br />
+                </li>
+{% else %}
+        <p>There are no recent jobs.</p>
+{% endfor %}
+              </ul>
+          </div>
+			<div class="sidebar-module sidebar-module-inset">
+            <h4><span class="glyphicon glyphicon-question-sign"></span>&nbsp;About</h4>
+            <p>GetJobInGermany Website gives you chance to search through the jobs database of Website - Make It In Germany.</p>
+          </div>
+          <div class="sidebar-links sidebar-module">
+            <h4><span class="glyphicon glyphicon-thumbs-up"></span>&nbsp;Useful links</h4>
+            <ol class="list-unstyled">
+              <li><a href="http://www.make-it-in-germany.com/" target="_blank" rel="nofollow">Make it in Germany</a></li>
+							<li><a href="http://www.arbeitsagentur.de/" target="_blank" rel="nofollow">Bundesagentur für Arbeit</a></li>
+            </ol>
+          </div>

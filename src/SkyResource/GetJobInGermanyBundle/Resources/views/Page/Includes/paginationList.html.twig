@@ -1,0 +1,44 @@
+				<nav>
+				  <ul class="pagination">		
+				    <li {{ thisPage == 1 ? 'class="disabled"' }}"><a href="{{ path(app.request.attributes.get('_route'), {'city': city, 'page': thisPage-1 >= 1 ? thisPage-1 : thisPage}) }}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>		
+				<li {{ thisPage == 1 ? 'class="active"' }}><a href="{{ path(app.request.attributes.get('_route'), {'city': city, 'page': 1}) }}">1</a></li>
+		   {% if (minPage>2) %}
+		  {% if (minPage==3) %}
+		  <li>
+					  <a href="{{ path(app.request.attributes.get('_route'), {'city': city, 'page': 2}) }}"> {{ 2 }}
+					  </a>
+		 {% else %}
+						<li>
+						<span aria-hidden="true">...</span>
+					</li>
+			{% endif %}
+					   {% endif %}
+				  {% for i in minPage..maxPage %}
+						{% if i!=1 and i!=maxPages %}
+          <li {{ thisPage == i ? 'class="active"' }}>
+          <a href="{{ path(app.request.attributes.get('_route'), { 'city': city, 'page' : (i)}) }}">{{ i }}	</a>
+          </li>
+					  {% endif %}
+			{% endfor %}
+			{% if (maxPages-maxPage>1) %}
+		  {% if ((maxPages-maxPage)==2) %}
+		  <li>
+					  <a href="{{ path(app.request.attributes.get('_route'), {'city': city, 'page': maxPage-1}) }}"> {{ maxPages-1 }}
+					  </a>
+			</li>
+		 {% else %}
+						<li>
+						<span aria-hidden="true">...</span>
+					</li>
+		 {% endif %}
+		   {% endif %}
+					<li {{ thisPage == maxPages ? 'class="active"' }}>
+					  <a href="{{ path(app.request.attributes.get('_route'), {'city': city, 'page': maxPages}) }}"> {{ maxPages }}
+					  </a>
+					</li>
+					<li {{ thisPage == maxPages ? 'class="disabled"' }}><a href="{{ path(app.request.attributes.get('_route'),{'city': city, 'page': thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}" aria-label="Next">
+						<span aria-hidden="true">&raquo;</span>
+					  </a>
+					</li>
+				  </ul>
+				</nav>

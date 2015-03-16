@@ -1,0 +1,4 @@
+# import routes from a controller directory
+get_job_in_germany:
+    resource: "@GetJobInGermanyBundle/Controller"
+    type:     annotation

@@ -1,0 +1,8 @@
+services:
+#    get_job_in_germany.example:
+#        class: SkyResource\GetJobInGermanyBundle\Example
+#        arguments: [@service_id, "plain_value", %parameter%]
+    getjobingermany.twig.extension:
+        class: SkyResource\GetJobInGermanyBundle\Twig\Extensions\GetJobInGermanyExtension
+        tags:
+            - { name: twig.extension }

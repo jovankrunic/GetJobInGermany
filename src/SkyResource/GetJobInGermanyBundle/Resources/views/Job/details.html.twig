@@ -1,0 +1,33 @@
+{# src/SkyResource/GetJobInGermanyBundle/Resources/views/Page/index.html.twig #}
+{% extends 'GetJobInGermanyBundle::layout.html.twig' %}
+
+{% block title %}{{ job.title }}{% endblock %}
+
+{% block mainarea %}
+		  <div class="row">
+	        <div class="col-xs-12">
+		      <div class="page-header">  
+               <h1 class="h1">Job Details</h1>
+             </div>
+			</div>
+			<div class="job-description-content col-xs-12">
+			<div class="row"><div class="col-xs-12 text-right top-date">Published: {{ job.publishedDate|localizeddate('long','none') }}</div></div>
+			<h1>{{ job.title }}</h1>
+<h2>{{ job.company }}</h2>
+<div class="row"><div class="col-md-6"><h2 class="h2 location">Location: <span class="location">{{ job.city }}</span></h2></div>
+<div class="col-md-6"><h2 class="h3 start">Start date: <span class="start">{{ job.startDate|localizeddate('long','none') }}</span></h2></div>
+<div class="col-xs-12">
+<h3 class="h3">Description</h3>
+<p>
+		{{ job.description|transform_newlines|raw }}
+</p>
+<h3 class="h3">Where?</h3>
+<p>
+		{{ job.location|transform_newlines|raw }}
+</p>
+</div>
+<div class="col-xs-12 apply-containter"><a href="http://www.make-it-in-germany.com/en/for-qualified-professionals/working/job-listings/detail/de-ba/{{ job.referenceNumber }}" target="_blank" rel="nofollow" class="btn btn-warning btn-lg apply">more & apply</a></div>
+</div>
+			</div>  
+		  </div>
+{% endblock %}

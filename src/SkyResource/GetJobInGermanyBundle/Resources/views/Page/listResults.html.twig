@@ -1,0 +1,29 @@
+{# src/SkyResource/GetJobInGermanyBundle/Resources/views/Page/index.html.twig #}
+{% extends 'GetJobInGermanyBundle::layout.html.twig' %}
+
+{% form_theme form 'form/search.html.twig' %}
+
+{% block title %}Jobs in {{ city }}{% endblock %}
+
+{% block mainarea %}
+  		  <div class="row">
+						<div class="col-sm-12 search-home">
+							{{ include('GetJobInGermanyBundle:Page:Includes/searchForm.html.twig',{'form':form, 'category':''}) }}
+				  	</div>
+	        <div class="col-xs-12">
+		      <div class="page-header no-bottom-border">  
+               <h3>{{ totalNumberOfJobs|number_format(0,',', '.') }} jobs found in {{ city }}</h3>
+             </div>
+				<ol class="search-results list-unstyled">
+				{% for job in jobs %}
+							{{ include('GetJobInGermanyBundle:Page:Includes/jobListDetails.html.twig',{'job':job, 'loop':loop}) }}
+				{% endfor %}
+			  </ol>
+		    </div>
+		{% if (maxPages>1) and (thisPage<=maxPages) %}
+			<div class="pagination-row col-xs-12">
+				{{ include('GetJobInGermanyBundle:Page:Includes/paginationList.html.twig',{'city':city, 'thisPage':thisPage, 'minPage':minPage, 'maxPage':maxPage, 'maxPages':maxPages, 'app.request':app.request}) }}
+			</div>
+		{% endif %}	
+		  </div>
+{% endblock %}

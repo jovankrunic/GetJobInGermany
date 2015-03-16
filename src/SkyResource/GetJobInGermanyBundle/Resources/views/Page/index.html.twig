@@ -1,0 +1,110 @@
+{# src/SkyResource/GetJobInGermanyBundle/Resources/views/Page/index.html.twig #}
+{% extends 'GetJobInGermanyBundle::layout.html.twig' %}
+
+{% form_theme form 'form/search.html.twig' %}
+
+{% block mainarea %}
+  		  <div class="row">
+		  <div class="col-sm-12 search-home">
+		  <div class="page-header">  
+            <h1>Search through {{ numberOfJobs.all|number_format(0,',', '.') }} jobs</h1>
+          </div>
+		  <form class="form-inline" action="{{ path('GetJobInGermanyBundle_search') }}" method="get" {{ form_enctype(form) }}>
+		    	<div class="row big-labels">
+				  <div class="col-sm-6">
+					<h4>Keyword (in German)</h4>
+				  </div>
+				  <div class="col-sm-4">
+					<h4>Location</h4>
+				  </div>
+				</div>
+				<div class="row">
+					<div class="form-group col-md-6 col-sm-5">
+					{{ form_row(form.keyword, {'attr': {'class': 'form-control', 'placeholder': 'What?', 'autocomplete': 'off' }}) }}
+					</div>
+					<div class="form-group col-sm-4">
+          {{ form_row(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Where?', 'autocomplete': 'off' }}) }}
+					</div>
+          {{ form_rest(form) }}
+			    <div class="form-group col-sm-2">
+			    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
+			    </div>
+				</div>
+		  </form>
+		</div>
+		</div>
+		<div class="row">
+	        <div class="col-xs-12">
+		      <div class="page-header">  
+               <h3>Area of interest</h3>
+             </div>
+		    </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item health">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'health'})}}"><i class="fa fa-user-md"></i><br /><span class="category-text">Health & Care ({{ numberOfJobs['health']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item it">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'it'})}}"><i class="fa fa-laptop"></i><br /><span class="category-text">Information technology ({{ numberOfJobs['it']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item mechatronics">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'mechatronics-energy-electronics'})}}"><i class="fa fa-calculator"></i><br /><span class="category-text">Mechatronics, energy & Electronics ({{ numberOfJobs['mechatronics-energy-electronics']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item building">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'building-architecture'})}}"><i class="fa fa-building"></i><br /><span class="category-text">Building ({{ numberOfJobs['building-architecture']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item rid">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'research-and-development'})}}"><i class="fa fa-flask"></i><br /><span class="category-text">Technical R&D ({{ numberOfJobs['research-and-development']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		    <div class="col-md-4 col-sm-6 col-xs-6">
+              <div class="category-item automotive">
+                <a href="{{ path('GetJobInGermanyBundle_search', {'category':'metal-mechanical-automotive'})}}"><i class="fa fa-automobile"></i><br /><span class="category-text">Automotive ({{ numberOfJobs['metal-mechanical-automotive']|number_format(0,',', '.') }})</span></a>
+              </div>
+            </div>
+		  </div>
+		  <div class="row">
+		    <div class="col-xs-12">
+		      <div class="page-header">  
+                <h3>Locations</h3>
+              </div>
+		    </div>
+<div class="col-xs-12">
+<div class="locations-home">
+        <ul class="locations-list">
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Berlin'})}}">Berlin</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Hamburg'})}}">Hamburg</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'München'})}}">Munich</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Köln'})}}">Cologne</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Frankfurt'})}}">Frankfurt</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Stuttgart'})}}">Stuttgart</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Düsseldorf'})}}">Düsseldorf</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Dortmund'})}}">Dortmund</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Essen'})}}">Essen</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Bremen'})}}">Bremen</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Dresden'})}}">Dresden</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Leipzig'})}}">Leipzig</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Hannover'})}}">Hanover</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Nürnberg'})}}">Nuremberg</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Duisburg'})}}">Duisburg</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Bochum'})}}">Bochum</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Wuppertal'})}}">Wuppertal</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Bonn'})}}">Bonn</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Bielefeld'})}}">Bielefeld</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Mannheim'})}}">Mannheim</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Karlsruhe'})}}">Karlsruhe</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Münster'})}}">Münster</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Wiesbaden'})}}">Wiesbaden</a></li>
+				<li><a href="{{ path('GetJobInGermanyBundle_searchCity', {'city':'Augsburg'})}}">Augsburg</a></li>
+					</ul>
+				</div>
+</div>				
+		  </div>
+{% endblock %}

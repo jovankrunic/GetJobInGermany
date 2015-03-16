@@ -1,0 +1,12 @@
+			<li {{ loop.index0 is odd ? 'class="odd"':'class="even"' }}>
+        <table>
+				<tbody>
+				<tr>
+				<td class="first"><a class="position" href="{{ path('GetJobInGermanyBundle_show',{'id':job.id,'slug':job.slug}) }}" title="{{ job.title }}"><h4>{{ job.title }}</h4></a>
+				<span class="company">{{ job.company }}</span></td>
+				<td class="second"><span class="glyphicon glyphicon-map-marker"></span>{% if (job.moreCities) %}<span class="more-locations-sign" title="Multiple locations">more</span>{% endif %}<br /><span class="location">{{ job.city }}</span></td>
+				<td class="third"><span class="date" title="published">{{ job.publishedDate|created_ago }}</span></td>
+				</tr>
+				</tbody>
+				</table>
+      </li>
