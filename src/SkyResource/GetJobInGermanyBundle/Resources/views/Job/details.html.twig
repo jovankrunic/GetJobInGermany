@@ -4,8 +4,8 @@
     {% block social_tags %}
         {% set title = job.title ~ ' - GET JOB IN GERMANY' %}
         {% set description = job.description %}
-				<meta property="og:description" content="{{ description }}" />
-				<meta name="description" content="{{ description }}" />
+				<meta property="og:description" content="{{ description|truncate(500) }}" />
+				<meta name="description" content="{{ description|truncate(500) }}" />
 				<meta name="twitter:title" content="{{ title }}" />
 				<meta name="twitter:description" content="{{ description|truncate(50) }}" />
 		{% endblock %}
@@ -28,16 +28,22 @@
 <div class="col-md-6"><h2 class="h3 start">Start date: <span class="start">{{ job.startDate|localizeddate('long','none') }}</span></h2></div>
 </div>
 <div class="row">
-		<div class="col-xs-12">
+		<div class="col-xs-12"><div class="share-box"><h4 class="h4">Want to share this job?</h4>
 		<!-- AddToAny BEGIN -->
-				<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
-				<a class="a2a_button_facebook"></a>
-				<a class="a2a_button_twitter"></a>
-				<a class="a2a_button_google_plus"></a>
-				<a class="a2a_button_linkedin"></a>
-				</div>
-				<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+		<div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+		<a class="a2a_button_facebook"></a>
+		<a class="a2a_button_twitter"></a>
+		<a class="a2a_button_google_plus"></a>
+		<a class="a2a_button_linkedin"></a>
+		<a class="a2a_button_xing"></a>
+		<a class="a2a_button_pinterest"></a>
+		<a class="a2a_button_vk"></a>
+		<a class="a2a_button_stumbleupon"></a>
+		<a class="a2a_button_email"></a>
+		</div>
+		<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
 		<!-- AddToAny END -->
+		</div>
 		</div>
 </div>
 <div class="row">
