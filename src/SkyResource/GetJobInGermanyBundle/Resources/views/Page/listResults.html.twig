@@ -3,6 +3,16 @@
 
 {% form_theme form 'form/search.html.twig' %}
 
+    {% block social_tags %}
+        {% set title = 'Jobs in ' ~ city %}
+        {% set description = 'Find and get job in ' ~ city ~' now!' %}
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta name="description" content="{{ description }}" />
+    <meta name="twitter:title" content="{{ title }}" />
+    <meta name="twitter:description" content="{{ description }}" />
+  {% endblock %}
+
 {% block title %}Jobs in {{ city }}{% endblock %}
 
 {% block mainarea %}

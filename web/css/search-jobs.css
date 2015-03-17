@@ -13,10 +13,18 @@ h3, .h3,
 h4, .h4,
 h5, .h5,
 h6, .h6 {
-/*	margin-top:0px;
+	/*
+	margin-top:0px;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   color: #333;*/
+}
+
+h3, .h3,
+h4, .h4,
+h5, .h5,
+h6, .h6 {
+	margin-top:0px;
 }
 
 .blog-sidebar h4 , .blog-sidebar .h4{
@@ -397,7 +405,6 @@ ul.latest-jobs li {
 }
 
 .bordered-with-header ul.latest-jobs li span.position {
-	text-transform: uppercase;
 }
 
 /* Pagination */

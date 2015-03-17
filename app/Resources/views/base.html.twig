@@ -6,24 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
-    <!-- for Google -->
-    <meta name="description" content="" />
-    <meta name="keywords" content="" />
-
-    <meta name="author" content="" />
-    <meta name="copyright" content="" />
-    <meta name="application-name" content="" />
-
-    <!-- for Facebook -->          
-    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('img/getjobingermany-share.png') }}" />
-
-    <!-- for Twitter -->
-    <meta name="twitter:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('img/getjobingermany-share.png') }}" />
+    <meta name="keywords" content="jobs, germany, search, jobs database" />
+    <link rel="publisher" href="https://plus.google.com/103883460964816235233" />
+    <link rel="author" href="https://plus.google.com/103883460964816235233" />
     
+    <meta property="og:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('img/getjobingermany-share.png') }}" />
+    <meta property="og:url" content="{{app.request.uri}}" />
+    <meta property="og:type" content="website" />
+    
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:image" content="{{ app.request.getSchemeAndHttpHost() ~ asset('img/getjobingermany-share.png') }}" />
+    {% block social_tags %}
+        {% set title = 'Find and get the right job in Germany now!' %}
+        {% set description = 'Search through a database of more than 40.000 jobs. Find your job in Germany today!' %}
+    <meta property="og:title" content="{{ title }}" />
+    <meta property="og:description" content="{{ description }}" />
+    <meta name="description" content="{{ description }}" />
+    <meta name="twitter:title" content="{{ title }}" />
+    <meta name="twitter:description" content="{{ description }}" />
+    {% endblock %}
     <link rel="icon" href="{{ asset('favicon.ico') }}">
     <link rel="apple-touch-icon image_src" href="{{ asset('apple-touch-icon.png') }}">
 
-    <title>{% block title %}Find and get the right job in Germany today!{% endblock %} | GET JOB IN GERMANY</title>
+    <title>{% block title %}Find and get the right job in Germany now!{% endblock %} | GET JOB IN GERMANY</title>
 
     <!-- Custom Fonts -->
     <!--<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
@@ -75,9 +80,9 @@
 	  </div>
 	</div>
     <footer class="blog-footer">
-      <p>made by <a href="http://skyresource.com" target="_blank" rel="nofollow">skyresource</a>.</p>
+         <p>made by <a href="http://skyresource.com" target="_blank" rel="nofollow">skyresource</a>.</p>
       <p>
-        <a href="#">^ to the top</a>
+        <a href="#">back to the top</a>
       </p>
     </footer>
     {# <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css"> #}
