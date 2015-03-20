@@ -2,5 +2,5 @@
 {% extends '::base.html.twig' %}
 
 {% block sidebar %}
-    {% render(controller("GetJobInGermanyBundle:Page:sidebar")) %}
+    {{ render_esi(controller("GetJobInGermanyBundle:Page:sidebar")) }}
 {% endblock %}
