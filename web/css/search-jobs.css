@@ -18,6 +18,7 @@ h6, .h6 {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: normal;
   color: #333;*/
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 h3, .h3,
@@ -94,9 +95,9 @@ outline: none;
 	  height: auto;
 	  padding: auto;
 	  margin: auto;
-      overflow: auto;
-      clip: auto;
-      border: auto;
+    overflow: auto;
+    clip: auto;
+    border: auto;
 	}
 	.search-home form.form-inline div[class*='col-sm-'] {
 	  padding-right: 15px;
@@ -107,6 +108,7 @@ outline: none;
     }
 	ul.latest-jobs li a {
       font-size: 1.2em;
+			font-family: 'Source Sans Pro', sans-serif;
     }
 	ul.latest-jobs li a span.position{
       font-size: 1.1em;
@@ -176,9 +178,18 @@ outline: none;
  * Masthead for nav
  */
 
+.navbar-default {
+	box-shadow: inset 5px -10px 5px -10px #E5E2E2;
+  -moz-box-shadow: inset 5px -10px 5px -10px #E5E2E2;
+  -webkit-box-shadow: inset 5px -10px 5px -10px #E5E2E2;
+}
+
 nav.navbar, footer.blog-footer {
 	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
 	font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
+  box-shadow: inset 3px 1px 3px 1px #E5E2E2;
+  -moz-box-shadow: inset 3px 1px 3px 1px #E5E2E2;
+  -webkit-box-shadow: inset 3px 1px 3px 1px #E5E2E2;
 }
 
 .blog-masthead {
@@ -220,7 +231,7 @@ nav.navbar, footer.blog-footer {
 }
 
 .navbar-header {
-	height:50px;
+	height:54px;
 	font-size:1em;
 }
 
@@ -258,23 +269,23 @@ div.category-item a:hover {
 	box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
 }
 
-.category-item.it :hover {
+.category-item.it a:hover {
 background-color: #0098ff;
 }
 
-.category-item.mechatronics :hover {
+.category-item.mechatronics a:hover {
 background-color: #ED146F;
 }
 
-.category-item.building :hover {
+.category-item.building a:hover {
 background-color: #FFDC00;
 }
 
-.category-item.rid :hover {
+.category-item.rid a:hover {
 background-color: #673695;
 }
 
-.category-item.automotive :hover {
+.category-item.automotive a:hover {
 background-color: #fd8008;
 }
 
@@ -348,6 +359,9 @@ font-size: 2.2em;
   background-color: #0098ff;
   border-radius: 2px;
   font-family: Arial,Helvetica,sans-serif;
+	-webkit-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+	-moz-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+	box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
 }
 .sidebar-module-inset p:last-child,
 .sidebar-module-inset ul:last-child,
@@ -380,6 +394,9 @@ font-size: 2.2em;
   border-width: 5px;
   border-style: solid;
   border-color: transparent;
+	-webkit-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+	-moz-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+	box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
 }
 
 .bordered-with-header.blue {
