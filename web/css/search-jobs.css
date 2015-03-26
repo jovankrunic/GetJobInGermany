@@ -28,6 +28,10 @@ h6, .h6 {
 	margin-top:0px;
 }
 
+label {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
 .blog-sidebar h4 , .blog-sidebar .h4{
 	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
 	font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
@@ -46,7 +50,7 @@ a:link, a:hover, a:active, a:visited{
   text-decoration: none;
 }
 
-a:hover {
+a:hover, a:active {
 	color:#30a7fc;
 }
 
@@ -187,7 +191,10 @@ outline: none;
 nav.navbar, footer.blog-footer {
 	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
 	font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
-  box-shadow: inset 3px 1px 3px 1px #E5E2E2;
+}
+
+footer.blog-footer {
+	box-shadow: inset 3px 1px 3px 1px #E5E2E2;
   -moz-box-shadow: inset 3px 1px 3px 1px #E5E2E2;
   -webkit-box-shadow: inset 3px 1px 3px 1px #E5E2E2;
 }
@@ -460,11 +467,12 @@ ul.latest-jobs li {
  */
 
 .blog-footer {
-  padding: 40px 0;
+	padding: 20px 0;
   color: #999;
   text-align: center;
   background-color: #f9f9f9;
   border-top: 1px solid #e5e5e5;
+	line-height: 2.3em;
 }
 .blog-footer p:last-child {
   margin-bottom: 0;
@@ -476,6 +484,25 @@ ul.latest-jobs li {
 
 .search-home .form-group input{
   height: auto;
+}
+
+footer.blog-footer span.made-by {
+	background-color: #E2EFF7;
+  color: #A59E9E;
+  font-weight: 600;
+  padding: 4px;
+}
+
+footer.blog-footer span.to-top {
+	background-color: #8ac007;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 5px;
+	border-radius: 10px;
+	margin-top:20px;
+	-webkit-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+  -moz-box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
+  box-shadow: 5px 5px 8px -2px rgba(186,186,186,1);
 }
 
 .search-home .form-control {
@@ -615,7 +642,7 @@ div.pagination-row {
 
 .job-description-content h2 {
   font-size: 1.8em;
-  margin:12px 0 24px 0;
+  margin:12px 0 12px 0;
 }
 
 .job-description-content h3 {
@@ -655,21 +682,27 @@ background-color: #FD7C36;
 
 div.share-box {
 	background-color:#F5F5F5;
-	padding:20px;
+	padding:20px 30px;
 	-moz-border-radius: 4px;
   border-radius: 4px;
+	border: 2px solid #F0EAF0;
 }
 
 div.share-box-home {
 	background-color:#F5F5F5;
-	padding:20px;
+	padding:20px 30px;
 	margin: 20px 0px;
 	-moz-border-radius: 4px;
   border-radius: 4px;
+	border: 2px solid #F0EAF0;
 }
 
 div.share-box-home h4 {
 	margin-bottom:14px;
+}
+
+div.share-box-home h4, div.share-box h4 {
+	font-weight: 600;
 }
 
 form .alert {
