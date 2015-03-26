@@ -37,10 +37,7 @@ a {
 }
 
 .blog-sidebar h4 , .blog-sidebar .h4{
-	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
-	font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
 	text-transform: uppercase;
-	font-size: 1.1em;
 	margin-top:0px;
 	font-weight: 400;
 	text-shadow: 1px 1px 1px rgba(182, 181, 181, 1);
@@ -194,7 +191,7 @@ outline: none;
 
 nav.navbar, footer.blog-footer {
 	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
-	font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 footer.blog-footer {
@@ -250,7 +247,6 @@ a.navbar-brand {
 	font-size: 1.4em;
 	font-weight:500;
 	line-height: 25px;
-	font-family: "Helvetica Neue",Helvetica,Arial,cursive;
 }
 
 .navbar-brand img.logo {
@@ -313,22 +309,22 @@ transition: all .3s ease;
 }
 
 .category-item a {
-position: relative;
-display: block;
-height: 100%;
-padding: 50px 30px 0;
-font-size: 1.2em;
-background: transparent;
-text-decoration: none;
-text-transform: capitalize;
-line-height: 1.1em;
-color: #333;
-/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
-font-family: "Helvetica Neue","Segoe UI",Segoe,Helvetica,Arial,"Lucida Grande",sans-serif;
+	position: relative;
+	display: block;
+	height: 100%;
+	padding: 44px 24px 0;
+	font-size:1.1em;
+	background: transparent;
+	text-decoration: none;
+	text-transform: capitalize;
+	line-height: 1em;
+	color: #333;
+	/*font-family: Montserrat,"Helvetica Neue",Helvetica,Arial,sans-serif;*/
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 .category-item a span.category-text {
-	font-size:0.8em;
+	font-size:0.95em;
 	font-weight: bold;
 }
 
@@ -346,8 +342,8 @@ text-rendering: auto;
 -webkit-font-smoothing: antialiased;
 -moz-osx-font-smoothing: grayscale;
 /*display: block;*/
-padding-bottom: 10px;
-font-size: 2.2em;
+padding-bottom: 6px;
+font-size: 2.6em;
 }
 
 /* Sidebar */
@@ -546,9 +542,9 @@ footer.blog-footer span.to-top {
 
 .locations-home
 {   
-    -moz-column-width: 6em; /* Firefox */
-    -webkit-column-width: 6em; /* webkit, Safari, Chrome */
-    column-width: 6em;
+  -moz-column-width: 6em; /* Firefox */
+  -webkit-column-width: 6em; /* webkit, Safari, Chrome */
+  column-width: 6em;
 	font-size: 1.4em;
 }
 /*remove standard list and bullet formatting from ul*/
