@@ -2,6 +2,7 @@
 
 namespace SkyResource\GetJobInGermanyBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
@@ -196,6 +197,25 @@ class PageController extends Controller
         }
         return $paginationNumbers;
         
+    }
+    
+    /**
+     * @Route("index-jobs", name="GetJobInGermanyBundle_indexjobs")
+     */      
+    
+    public function indexJobsAction() {
+        
+        $em = $this->getDoctrine()
+               ->getManager();
+
+        $jobLimit = 1000;
+    
+        $em->getRepository('GetJobInGermanyBundle:Job')
+                         ->indexJobsFromDB($jobLimit);
+                         
+
+
+        return new Response();
     }
     
 }

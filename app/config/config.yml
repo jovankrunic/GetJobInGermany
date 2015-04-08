@@ -69,6 +69,9 @@ doctrine:
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
         auto_mapping: true
+        dql:
+          string_functions:
+            MATCH: SkyResource\GetJobInGermanyBundle\DQL\MatchAgainst
 
 # Swiftmailer Configuration
 swiftmailer:

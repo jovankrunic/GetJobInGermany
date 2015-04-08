@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Entity(repositoryClass="SkyResource\GetJobInGermanyBundle\Entity\Repository\JobRepository")
  * @ORM\Table(name="jobs", indexes={@ORM\Index(name="FOREIGN", columns={"category_id"})})
+ * @ORM\HasLifecycleCallbacks
  */
 class Job
 {
@@ -471,4 +472,39 @@ class Job
     {
         return __DIR__.'/../../../../web/data/job.index';
     }
+    
+     
+    public function updateLuceneIndex()
+    {
+        $index = self::getLuceneIndex();
+
+        // remove existing entries
+        foreach ($index->find('pk:'.$this->getId()) as $hit)
+        {
+          $index->delete($hit->id);
+        }
+
+        // don't index expired and non-activated jobs
+        /*
+        if ($this->isExpired() || !$this->getIsActivated())
+        {
+          return;
+        }
+        */
+
+        $doc = new \Zend_Search_Lucene_Document();
+
+        // store job primary key to identify it in the search results
+        $doc->addField(\Zend_Search_Lucene_Field::Keyword('pk', $this->getId()));
+
+        // index job fields
+        $doc->addField(\Zend_Search_Lucene_Field::UnStored('title', $this->getTitle(), 'utf-8'));
+        $doc->addField(\Zend_Search_Lucene_Field::UnStored('location', $this->getLocation(), 'utf-8'));
+        $doc->addField(\Zend_Search_Lucene_Field::UnStored('description', $this->getDescription(), 'utf-8'));
+
+        // add job to the index
+        $index->addDocument($doc);
+        $index->commit();
+    }
+    
 }

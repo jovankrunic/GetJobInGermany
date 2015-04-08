@@ -5,6 +5,8 @@ namespace SkyResource\GetJobInGermanyBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use SkyResource\GetJobInGermanyBundle\Entity\Job;
+
 
 /**
  * JobRepository
@@ -25,7 +27,126 @@ class JobRepository extends EntityRepository
                 ->getResult();
     }
     
+    public function getAllJobs() {
+        
+        $jAllQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+        
+        $paginator = $this->paginate($jAllQuery, $currentPage);
+        
+        return $paginator;
+        
+    }
+    
+    function getQueryWithoutCategory($skill, $location) {
+        if ($skill!="" && $location!="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->where('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->setParameter('skill', $skill)
+                 ->setParameter('location', $location)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+        }
+        else if ($skill!="" && $location=="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->where('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->setParameter('skill', $skill)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+            
+        }
+        else if ($skill=="" && $location!="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->where('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->setParameter('location', $location)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();            
+        }
+        else {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();     
+        }
+        
+        return $jSearchQuery;
+    }
+    
+    function getQueryWithCategory($skill, $location, $category) {
+        if ($skill!="" && $location!="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
+                 ->leftJoin('j.category','c')
+                 ->where('c.slug = :category')
+                 ->andWhere('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->setParameter('skill', $skill)
+                 ->setParameter('location', $location)
+                 ->setParameter('category', $category)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+        }
+        else if ($skill!="" && $location=="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
+                 ->leftJoin('j.category','c')
+                 ->where('c.slug = :category')
+                 ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->setParameter('skill', $skill)
+                 ->setParameter('category', $category)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+        }
+        else if ($skill=="" && $location!="") {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
+                 ->leftJoin('j.category','c')
+                 ->where('c.slug = :category')
+                 ->andWhere('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->setParameter('location', $location)
+                 ->setParameter('category', $category)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();
+        }
+        else {
+            $jSearchQuery = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
+                 ->leftJoin('j.category','c')
+                 ->where('c.slug = :category')
+                 ->setParameter('category', $category)
+                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->getQuery();        
+        }
+        
+        return $jSearchQuery;
+    }
+    
+    
     public function getJobsBySearchCriteria($skill, $location, $category, $currentPage=1) {
+        
+        if ($category=="") {
+            $jSearchQuery = $this->getQueryWithoutCategory($skill,$location);
+        }
+        
+        else {
+            $jSearchQuery = $this->getQueryWithCategory($skill,$location,$category);
+        }
+
+      $paginator = $this->paginate($jSearchQuery, $currentPage);
+
+      return $paginator;
+    }
+    
+
+/*    
+    public function getJobsBySearchCriteria($skill, $location, $category, $currentPage=1) {
+        
         if ($category!="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
@@ -57,6 +178,7 @@ class JobRepository extends EntityRepository
 
       return $paginator;
     }
+*/
     
     public function getNumberOfAllJobs() {
         $jSearchQuery = $this->createQueryBuilder('j')
@@ -178,5 +300,24 @@ class JobRepository extends EntityRepository
 
       return $paginator;
     }
+    
+    
+    public function indexJobsFromDB($limit = null)
+    {
+      $qj = $this->createQueryBuilder('j')
+                 ->select('partial j.{id,title,company,slug,publishedDate,city}')
+                 ->addOrderBy('j.publishedDate', 'DESC');
 
+      if (false === is_null($limit))
+          $qj->setMaxResults($limit);
+
+      $jobs = $qj->getQuery()
+                ->getResult();
+    
+        foreach ($jobs as $job) {
+            $job->updateLuceneIndex();
+        }
+    
+    }
+    
 }
