@@ -2,6 +2,6 @@
 {% block form_row %}
 {% spaceless %}
         {{ form_label(form, null, {'label_attr': {'class': 'sr-only'}}) }}
-          {{ form_widget(form, {'attr': {'class': 'form-control'}}) }}
+          {{ form_widget(form, {'attr': {'class': 'form-control', 'data-provide':'typeahead'}}) }}
 {% endspaceless %}
 {% endblock form_row %}

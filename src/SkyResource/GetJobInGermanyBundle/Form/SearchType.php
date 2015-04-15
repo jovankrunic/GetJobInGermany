@@ -10,7 +10,7 @@ class SearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('keyword', 'search', array('label' => 'Keyword (in German)', 'required' => false));
+        $builder->add('keyword', 'text', array('label' => 'Keyword (in German)', 'required' => false));
         $builder->add('location', 'search', array('required' => false));
     }
 

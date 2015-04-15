@@ -5,6 +5,8 @@ namespace SkyResource\GetJobInGermanyBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class JobController extends Controller
 {
     
@@ -48,6 +50,52 @@ class JobController extends Controller
             throw $this->createNotFoundException('Unable to find desired job.');
         }
             return $response;
+    }
+    
+    
+    /**
+     * @Route("complete-job/{keywordPart}", name="GetJobInGermanyBundle_completeJob", defaults={"keywordPart"=""})
+     */
+    public function completeJobAction($keywordPart) {
+        
+        $response = new JsonResponse();
+        
+        if ($keywordPart!="") {
+        
+          $em = $this->getDoctrine()->getManager();
+          $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarJobs($keywordPart);
+          $response->setData($jobs);
+        
+        }
+
+        return $response; 
+        
+    }
+    
+    /**
+     * @Route("complete-location/{locationPart}", name="GetJobInGermanyBundle_completeLocation", defaults={"locationPart"=""})
+     */
+    public function completeLocationAction($locationPart) {
+        
+        $response = new JsonResponse();
+        
+        if ($locationPart!="") {
+        
+          $em = $this->getDoctrine()->getManager();
+          $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarLocations($locationPart);
+          
+/*          $locations = array();
+          
+          foreach ($jobs as $job) {
+                $locations[] = $job['city'];
+          }
+*/          
+          $response->setData($jobs);
+        
+        }
+
+        return  $response;
+        
     }
     
 /*    

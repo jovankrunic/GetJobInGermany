@@ -48,7 +48,7 @@ class JobRepository extends EntityRepository
                  ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
                  ->setParameter('skill', $skill)
                  ->setParameter('location', $location)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+            /*     ->addOrderBy('j.publishedDate', 'DESC')  */
                  ->getQuery();
         }
         else if ($skill!="" && $location=="") {
@@ -56,7 +56,7 @@ class JobRepository extends EntityRepository
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
                  ->setParameter('skill', $skill)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+        /*         ->addOrderBy('j.publishedDate', 'DESC')  */
                  ->getQuery();
             
         }
@@ -65,13 +65,13 @@ class JobRepository extends EntityRepository
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.location) AGAINST(:location) > 0.8')
                  ->setParameter('location', $location)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+        /*         ->addOrderBy('j.publishedDate', 'DESC')   */
                  ->getQuery();            
         }
         else {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
-                 ->addOrderBy('j.publishedDate', 'DESC')
+        /*         ->addOrderBy('j.publishedDate', 'DESC')  */
                  ->getQuery();     
         }
         
@@ -318,6 +318,33 @@ class JobRepository extends EntityRepository
             $job->updateLuceneIndex();
         }
     
+    }
+    
+    public function getSimilarJobs($keywordPart) {
+        
+        $qj = $this->createQueryBuilder('j')
+                 ->select('j.title')
+                 ->where('j.title LIKE :keywordPart')
+                 ->setParameter('keywordPart', '%'.$keywordPart.'%')
+                 ->distinct()
+/*                 ->addOrderBy('j.publishedDate', 'DESC')  */
+                 ->setMaxResults(10);
+
+        return $qj->getQuery()
+                ->getResult();
+    }
+    
+    public function getSimilarLocations($locationPart) {
+       
+       $qj = $this->createQueryBuilder('j')
+                 ->select('j.city')
+                 ->where('j.city LIKE :locationPart')
+                 ->setParameter('locationPart', '%'.$locationPart.'%')
+                 ->distinct()
+                 ->setMaxResults(10);
+
+        return $qj->getQuery()
+                ->getResult();
     }
     
 }

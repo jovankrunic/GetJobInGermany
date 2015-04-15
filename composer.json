@@ -20,7 +20,8 @@
         "incenteev/composer-parameter-handler": "~2.0",
     	"doctrine/doctrine-migrations-bundle": "dev-master",
     	"doctrine/migrations": "dev-master",
-        "knplabs/knp-paginator-bundle": "~2.4"
+        "knplabs/knp-paginator-bundle": "~2.4",
+        "friendsofsymfony/jsrouting-bundle": "~1.5"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
