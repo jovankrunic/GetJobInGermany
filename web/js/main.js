@@ -71,7 +71,7 @@ var keywordJobs = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('title'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
 /*  prefetch: 'http://getjobingermany.skyresource.com/app_dev.php/complete-location/', */
-  remote: 'http://getjobingermany.skyresource.com/app_dev.php/complete-job/%QUERY'
+  remote: 'http://getjobingermany.com/complete-job/%QUERY'
 });
  
 keywordJobs.initialize();
@@ -86,7 +86,7 @@ var bestPictures = new Bloodhound({
   datumTokenizer: Bloodhound.tokenizers.obj.whitespace('city'),
   queryTokenizer: Bloodhound.tokenizers.whitespace,
 /*  prefetch: 'http://getjobingermany.skyresource.com/app_dev.php/complete-location/', */
-  remote: 'http://getjobingermany.skyresource.com/app_dev.php/complete-location/%QUERY'
+  remote: 'http://getjobingermany.com/complete-location/%QUERY'
 });
  
 bestPictures.initialize();
