@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class JobController extends Controller
 {
@@ -56,45 +57,59 @@ class JobController extends Controller
     /**
      * @Route("complete-job/{keywordPart}", name="GetJobInGermanyBundle_completeJob", defaults={"keywordPart"=""})
      */
-    public function completeJobAction($keywordPart) {
+    public function completeJobAction(Request $request, $keywordPart) {
         
-        $response = new JsonResponse();
+        if ($request->isXmlHttpRequest()) {
         
-        if ($keywordPart!="") {
+                $response = new JsonResponse();
+                
+                if ($keywordPart!="") {
+                
+                  $em = $this->getDoctrine()->getManager();
+                  $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarJobs($keywordPart);
+                  $response->setData($jobs);
+                
+                }
         
-          $em = $this->getDoctrine()->getManager();
-          $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarJobs($keywordPart);
-          $response->setData($jobs);
-        
+                return $response;
         }
-
-        return $response; 
+        
+        else {
+                throw new \Exception('Not Allowed');
+        }
         
     }
     
     /**
      * @Route("complete-location/{locationPart}", name="GetJobInGermanyBundle_completeLocation", defaults={"locationPart"=""})
      */
-    public function completeLocationAction($locationPart) {
+    public function completeLocationAction(Request $request, $locationPart) {
         
-        $response = new JsonResponse();
+        if ($request->isXmlHttpRequest()) {
+                
+                $response = new JsonResponse();
+                
+                if ($locationPart!="") {
+                
+                  $em = $this->getDoctrine()->getManager();
+                  $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarLocations($locationPart);
+                  
+        /*          $locations = array();
+                  
+                  foreach ($jobs as $job) {
+                        $locations[] = $job['city'];
+                  }
+        */          
+                  $response->setData($jobs);
+                
+                }
         
-        if ($locationPart!="") {
-        
-          $em = $this->getDoctrine()->getManager();
-          $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarLocations($locationPart);
-          
-/*          $locations = array();
-          
-          foreach ($jobs as $job) {
-                $locations[] = $job['city'];
-          }
-*/          
-          $response->setData($jobs);
-        
+                return  $response;
         }
-
-        return  $response;
+        
+        else {
+                throw new \Exception('Not Allowed');
+        }
         
     }
     
