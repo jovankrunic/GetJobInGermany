@@ -50,7 +50,7 @@ class JobRepository extends EntityRepository
                  ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
                  ->setParameter('skill', $skill)
                  ->setParameter('location', $location)
-            /*     ->addOrderBy('j.publishedDate', 'DESC')  */
+                 ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();
         }
         else if ($skill!="" && $location=="") {
@@ -58,7 +58,7 @@ class JobRepository extends EntityRepository
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
                  ->setParameter('skill', $skill)
-        /*         ->addOrderBy('j.publishedDate', 'DESC')  */
+                 ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();
             
         }
@@ -67,13 +67,13 @@ class JobRepository extends EntityRepository
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.location) AGAINST(:location) > 0.8')
                  ->setParameter('location', $location)
-        /*         ->addOrderBy('j.publishedDate', 'DESC')   */
+                 ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();            
         }
         else {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
-        /*         ->addOrderBy('j.publishedDate', 'DESC')  */
+                 ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();     
         }
         
@@ -229,7 +229,7 @@ class JobRepository extends EntityRepository
                  ->where('j.title LIKE :keywordPart')
                  ->setParameter('keywordPart', '%'.$keywordPart.'%')
                  ->distinct()
-/*                 ->addOrderBy('j.publishedDate', 'DESC')  */
+        /*         ->addOrderBy('j.publishedDate', 'DESC')  */
                  ->setMaxResults(10);
 
         return $qj->getQuery()
