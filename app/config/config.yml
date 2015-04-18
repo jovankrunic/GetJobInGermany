@@ -81,5 +81,6 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# FOSJsRoutingBundle configuration
 fos_js_routing:
     routes_to_expose: [ GetJobInGermanyBundle_completeJob,GetJobInGermanyBundle_completeLocation ]

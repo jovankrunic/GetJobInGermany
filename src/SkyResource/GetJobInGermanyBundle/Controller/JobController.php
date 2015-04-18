@@ -10,30 +10,10 @@ use Symfony\Component\HttpFoundation\Request;
 
 class JobController extends Controller
 {
-    
-
-/*    
-
-    public function searchByCityAction($city, $page=1) {
-        
-        $limit = 30;
-        
-        $em = $this->getDoctrine()->getManager();
-        
-        $jobs = $em->getRepository('GetJobInGermanyBundle:Job')
-                    ->getJobsByCity($city, $page, $limit);
-        $totalNumberOfJobs = $jobs->count();
-        $maxPages = ceil($totalNumberOfJobs / $limit);
-        $thisPage = $page;
-        
-            return $this->render('GetJobInGermanyBundle:Job:resultsCity.html.twig', array('city' => $city, 'jobs' => $jobs,                   'maxPages'=> $maxPages,                    'thisPage' => $thisPage, 'totalNumberOfJobs' => $totalNumberOfJobs));
-    }
-    
-*/  
-    
+    // show single job's page using provided job id
     /**
      * @Route("job/{id}-{slug}", name="GetJobInGermanyBundle_show")
-     */    
+     */
     public function showJobAction($id) {
         
         $em = $this->getDoctrine()->getManager();
@@ -54,6 +34,7 @@ class JobController extends Controller
     }
     
     
+    // in case of an ajax call: return json document with job titles containing "keywordPart" string
     /**
      * @Route("complete-job/{keywordPart}", name="GetJobInGermanyBundle_completeJob", defaults={"keywordPart"=""})
      */
@@ -80,6 +61,7 @@ class JobController extends Controller
         
     }
     
+    // in case of an ajax call: return json document with job cities containing "locationPart" string  
     /**
      * @Route("complete-location/{locationPart}", name="GetJobInGermanyBundle_completeLocation", defaults={"locationPart"=""})
      */
@@ -92,16 +74,9 @@ class JobController extends Controller
                 if ($locationPart!="") {
                 
                   $em = $this->getDoctrine()->getManager();
-                  $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarLocations($locationPart);
-                  
-        /*          $locations = array();
-                  
-                  foreach ($jobs as $job) {
-                        $locations[] = $job['city'];
-                  }
-        */          
+                  $jobs = $em->getRepository('GetJobInGermanyBundle:Job')->getSimilarLocations($locationPart);          
                   $response->setData($jobs);
-                
+                  
                 }
         
                 return  $response;
@@ -112,22 +87,5 @@ class JobController extends Controller
         }
         
     }
-    
-/*    
-    private function getPaginationData($totalNumberOfJobs, $currentPage, $limit) {
-        $paginationData = array();
-        $paginationData['maxPages'] = ceil($totalNumberOfJobs / $limit);
-        if ($paginationData)['maxPages'] <10 {
-            return true;
-        }
-        
-        if ($currentPage==1) {
-            $paginationData['startPage'] = 1;
-            $paginationData['endPage'] = max
-        }
-        $paginationData['startPage'] = ();
-    }
-
-*/
     
 }

@@ -12,6 +12,8 @@ class GetJobInGermanyExtension extends \Twig_Extension
             'transform_newlines' => new \Twig_Filter_Method($this, 'transformNewlines'),
         );
     }
+    
+    // filter function that accepts DateTime object and transforms it into "ago" date string
     public function createdAgo(\DateTime $dateTime)
     {
         $delta = time() - $dateTime->getTimestamp();
@@ -50,6 +52,7 @@ class GetJobInGermanyExtension extends \Twig_Extension
         return $duration;
     }
     
+    // filter function which removes some newlines from original strings recorded in the database using pyrthon script that fetches the jobs; basically for correction of strings from database before they are shown on the web page
     public function transformNewlines($sourceString) {
         
         $order   = array("\r\n", "\n", "\r");
@@ -75,7 +78,7 @@ class GetJobInGermanyExtension extends \Twig_Extension
         return $resultString;
         
     }
-    
+    // helper function for transformNewlines($sourceString)
     private function strReplaceAssoc(array $replace, $subject) { 
         return str_replace(array_keys($replace), array_values($replace), $subject);    
     } 

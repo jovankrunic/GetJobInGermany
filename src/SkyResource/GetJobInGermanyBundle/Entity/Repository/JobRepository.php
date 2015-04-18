@@ -13,7 +13,7 @@ use SkyResource\GetJobInGermanyBundle\Entity\Job;
  */
 class JobRepository extends EntityRepository
 {
-
+    // return latest jobs (array) when maximal number (limit) of jobs is given; when limit is null, return all of them
     public function getLatestJobs($limit = null)
     {
       $qj = $this->createQueryBuilder('j')
@@ -27,6 +27,7 @@ class JobRepository extends EntityRepository
                 ->getResult();
     }
     
+    // return all jobs, but get only particular job properties (id, title, company, slug, publishedDate, city, moreCities)
     public function getAllJobs() {
         
         $jAllQuery = $this->createQueryBuilder('j')
@@ -40,7 +41,8 @@ class JobRepository extends EntityRepository
         
     }
     
-    function getQueryWithoutCategory($skill, $location) {
+    // return Query when $category is not set, using $skill and $location string parameters which can be empty - there are 4 posible variants
+    private function getQueryWithoutCategory($skill, $location) {
         if ($skill!="" && $location!="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
@@ -78,7 +80,8 @@ class JobRepository extends EntityRepository
         return $jSearchQuery;
     }
     
-    function getQueryWithCategory($skill, $location, $category) {
+    // return Query when $category is set, using $skill and $location string parameters which can be empty - there are 4 posible variants
+    private function getQueryWithCategory($skill, $location, $category) {
         if ($skill!="" && $location!="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
@@ -127,7 +130,7 @@ class JobRepository extends EntityRepository
         return $jSearchQuery;
     }
     
-    
+    // return "paginated" jobs using search criteria - parameters: skill (keyword), location, category and current page (for pagination)
     public function getJobsBySearchCriteria($skill, $location, $category, $currentPage=1) {
         
         if ($category=="") {
@@ -143,43 +146,7 @@ class JobRepository extends EntityRepository
       return $paginator;
     }
     
-
-/*    
-    public function getJobsBySearchCriteria($skill, $location, $category, $currentPage=1) {
-        
-        if ($category!="") {
-            $jSearchQuery = $this->createQueryBuilder('j')
-                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
-                 ->leftJoin('j.category','c')
-                 ->where('j.description LIKE :skill')
-                 ->orWhere('j.title LIKE :skill')
-                 ->andWhere('c.slug = :category')
-                 ->andWhere('j.location LIKE :location')
-                 ->setParameter('skill', '%'.$skill.'%')
-                 ->setParameter('location', '%'.$location.'%')
-                 ->setParameter('category', $category)
-                 ->addOrderBy('j.publishedDate', 'DESC')
-                 ->getQuery();
-        }
-        else {
-            $jSearchQuery = $this->createQueryBuilder('j')
-                 ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
-                 ->leftJoin('j.category','c')
-                 ->where('j.description LIKE :skill')
-                 ->orWhere('j.title LIKE :skill')
-                 ->andWhere('j.location LIKE :location')
-                 ->setParameter('skill', '%'.$skill.'%')
-                 ->setParameter('location', '%'.$location.'%')
-                 ->addOrderBy('j.publishedDate', 'DESC')
-                 ->getQuery();  
-        }
-                
-      $paginator = $this->paginate($jSearchQuery, $currentPage);
-
-      return $paginator;
-    }
-*/
-    
+    // return number of all jobs in the database
     public function getNumberOfAllJobs() {
         $jSearchQuery = $this->createQueryBuilder('j')
              ->select('COUNT(j)')
@@ -187,6 +154,7 @@ class JobRepository extends EntityRepository
         return $jSearchQuery->getSingleScalarResult();
     }
     
+    // return numbers of jobs for each category
     public function getNumberOfJobsByCategory() {
         
         $jobsByCategories = array();
@@ -207,6 +175,7 @@ class JobRepository extends EntityRepository
         return $numberOfJobs;
     }
     
+    // return numbers of jobs per city, when city is given as parameter
     public function getNumberOfJobsByCity($cities) {
         
         $numberOfJobs = array();
@@ -224,38 +193,7 @@ class JobRepository extends EntityRepository
     
     }
     
-/*    public function getJobsNumberBySearchCriteria($skill, $location, $currentPage=1) {
-      $jSearchQuery = $this->createQueryBuilder('j')
-                 ->select('COUNT(j)')
-                 ->where('j.description LIKE :skill')
-                 ->orWhere('j.title LIKE :skill')
-                 ->andWhere('j.location LIKE :location')
-                 ->setParameter('skill', '%'.$skill.'%')
-                 ->setParameter('location', '%'.$location.'%')
-                 ->addOrderBy('j.publishedDate', 'DESC')
-                 ->getQuery();
-
-      return jSearchQuery->getSingleScalarResult();
-    }
-
-    
-    public function getJobsByCategory($category, $currentPage = 1)
-    {
-    
-      $jcQuery = $this->createQueryBuilder('j')
-                ->select('j', 'c')
-                 ->leftJoin('j.category','c')
-                 ->where('c.slug = :slug')
-                 ->setParameter('slug', $category)
-                 ->addOrderBy('j.publishedDate', 'DESC')
-                 ->getQuery();
-        
-      $paginator = $this->paginate($jcQuery, $currentPage);
-
-      return $paginator;
-    }
-*/
-    
+    // return paginated jobs per city, when city is given as parameter
     public function getJobsByCity($city, $currentPage = 1)
     {
     
@@ -271,25 +209,7 @@ class JobRepository extends EntityRepository
       return $paginator;
     }
     
-/*
-    public function getJobsByCategoryAndCity($category, $city, $currentPage = 1) {
-            
-      $jccQuery = $this->createQueryBuilder('j')
-                 ->select('j','c')
-                 ->leftJoin('j.category','c')
-                  ->where('c.slug = :slug')
-                 ->andWhere('j.location LIKE :city')
-                 ->setParameter('slug', $category)
-                 ->setParameter('city', '%'.$city.'%')
-                 ->addOrderBy('j.publishedDate', 'DESC')
-                 ->getQuery();
-        
-      $paginator = $this->paginate($jccQuery, $currentPage);
-
-      return $paginator;
-    }
-    
-*/
+    // help function for pagination
     public function paginate($dql, $page = 1, $limit = 30)
     {
       $paginator = new Paginator($dql);
@@ -301,25 +221,7 @@ class JobRepository extends EntityRepository
       return $paginator;
     }
     
-    
-    public function indexJobsFromDB($limit = null)
-    {
-      $qj = $this->createQueryBuilder('j')
-                 ->select('partial j.{id,title,company,slug,publishedDate,city}')
-                 ->addOrderBy('j.publishedDate', 'DESC');
-
-      if (false === is_null($limit))
-          $qj->setMaxResults($limit);
-
-      $jobs = $qj->getQuery()
-                ->getResult();
-    
-        foreach ($jobs as $job) {
-            $job->updateLuceneIndex();
-        }
-    
-    }
-    
+    // return similar jobs, when part of the keyword is given (keywordPart)
     public function getSimilarJobs($keywordPart) {
         
         $qj = $this->createQueryBuilder('j')
@@ -334,6 +236,7 @@ class JobRepository extends EntityRepository
                 ->getResult();
     }
     
+    // return similar jobs, when part of the city string is given (locationPart)    
     public function getSimilarLocations($locationPart) {
        
        $qj = $this->createQueryBuilder('j')

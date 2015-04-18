@@ -14,6 +14,8 @@ use SkyResource\GetJobInGermanyBundle\Form\SearchType;
 
 class PageController extends Controller
 {
+    
+    // show index page containing numbers of jobs in database (also per category/city)
     /**
      * @Route("/", name="GetJobInGermanyBundle_home")
      */
@@ -36,10 +38,6 @@ class PageController extends Controller
         $numberOfJobs = array_merge($numberOfJobs, $em->getRepository('GetJobInGermanyBundle:Job')
                 ->getNumberOfJobsByCategory());
         
-        // $cities = array('Berlin','Hamburg','München','Köln','Frankfurt','Stuttgart','Düsseldorf','Dortmund','Essen','Bremen','Dresden','Leipzig','Hannover','Nürnberg','Duisburg','Bochum','Wuppertal','Bonn','Bielefeld','Mannheim','Karlsruhe','Münster','Wiesbaden','Augsburg');
-        
-       // $numberOfJobs = array_merge($numberOfJobs, $em->getRepository('GetJobInGermanyBundle:Job')->getNumberOfJobsByCity($cities));
-        
         $response = $this->render('GetJobInGermanyBundle:Page:index.html.twig', array('form' => $form->createView(),'numberOfJobs'=>$numberOfJobs));
         
         $response->setSharedMaxAge(1800);
@@ -47,6 +45,7 @@ class PageController extends Controller
         return $response;
     }
     
+    // show sidebar
     public function sidebarAction() {
         
         $em = $this->getDoctrine()
@@ -68,6 +67,7 @@ class PageController extends Controller
         return $response;
     }
 
+    // show search result page with jobs from selected city using city link from the index page
     /**
      * @Route("jobs-in-{city}/{page}", name="GetJobInGermanyBundle_searchCity", defaults={"page"=1})
      */    
@@ -102,6 +102,7 @@ class PageController extends Controller
         return $response;
     }
 
+    // show contact page
     /**
      * @Route("/contact", name="GetJobInGermanyBundle_contact")
      */    
@@ -133,6 +134,7 @@ class PageController extends Controller
       ));
     }
     
+    // show search result page for jobs in all or in particular category
     /**
      * @Route("jobs/{category}", name="GetJobInGermanyBundle_search", defaults={"category"=""})
      */    
@@ -183,7 +185,7 @@ class PageController extends Controller
     
     }
     
-    
+    // helper function used only in this controller, which calculates numbers in order to correctly show pagination area
     private function getPaginationNumbers($numberOfJobs, $limit, $page) {
         
         $paginationNumbers = array();
@@ -197,25 +199,6 @@ class PageController extends Controller
         }
         return $paginationNumbers;
         
-    }
-    
-    /**
-     * @Route("index-jobs", name="GetJobInGermanyBundle_indexjobs")
-     */      
-    
-    public function indexJobsAction() {
-        
-        $em = $this->getDoctrine()
-               ->getManager();
-
-        $jobLimit = 1000;
-    
-        $em->getRepository('GetJobInGermanyBundle:Job')
-                         ->indexJobsFromDB($jobLimit);
-                         
-
-
-        return new Response();
     }
     
 }

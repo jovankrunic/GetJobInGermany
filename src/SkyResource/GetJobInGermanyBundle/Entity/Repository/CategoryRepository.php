@@ -10,7 +10,7 @@ use Doctrine\ORM\EntityRepository;
  */
 class CategoryRepository extends EntityRepository
 {
-
+    // return category name (string) when it's slug is given
     public function getCategoryName($slug)
     {
       $cn = $this->createQueryBuilder('c')
