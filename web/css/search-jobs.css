@@ -478,7 +478,7 @@ div.pagination-row {
   font-weight:600;
 }
 
-.blog-main .job-description-content a.apply {
+.blog-main a.apply {
   border-color: #f55600;
   background-color: #ff6d1f;
 }
@@ -488,7 +488,7 @@ div.pagination-row {
   margin:4px 0 30px 0;
 }
 
-.blog-main .job-description-content a.apply:hover{
+.blog-main a.apply:hover{
 background-color: #FD7C36;
 }
 

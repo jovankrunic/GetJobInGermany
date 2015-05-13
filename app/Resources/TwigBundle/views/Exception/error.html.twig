@@ -1,0 +1,14 @@
+{# src/SkyResource/GetJobInGermanyBundle/Resources/views/Page/index.html.twig #}
+{% extends 'GetJobInGermanyBundle::layout.html.twig' %}
+
+{% block mainarea %}
+        <div class="row">
+		  <div class="col-sm-12 search-home">
+					<div class="page-header"><h1>Ooooops!</h1></div>
+          <h3>Sorry, we couldn't find the page you requested. Please try something else. We recommend these actions:</h3>
+          </div>
+      </div>
+        <div class="row">
+          <div class="col-xs-12 apply-containter"><a href="{{ path('GetJobInGermanyBundle_home') }}" class="btn btn-warning btn-lg apply">new search</a>&nbsp;&nbsp;<a href="{{ path('GetJobInGermanyBundle_contact') }}" class="btn btn-warning btn-lg apply">contact us</a></div>
+</div>
+{% endblock %}
