@@ -55,12 +55,14 @@ outline: none;
 
 /* Override Bootstrap's default container. */
 
+/*
 @media (min-width: 1200px) {
   .container {
     width: 1070px;
   }
   
 }
+  */
 
 @media (max-width: 767px) {
 	.btn {
@@ -348,6 +350,14 @@ font-size: 2.6em;
 }
 .form-control {
 	border-radius: 0px;
+}
+
+.slider-container {
+	margin-top:20px;
+}
+
+.slider.slider-horizontal {
+	width: 100%;
 }
 
 .locations-home
@@ -756,3 +766,10 @@ form .alert {
 .tt-suggestion p {
   margin: 0;
 }
+
+div#full-container {display:none;}
+.preload { width:100px;
+    height: 100px;
+    position: fixed;
+    top: 50%;
+    left: 50%;}

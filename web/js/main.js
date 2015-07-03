@@ -35,3 +35,60 @@ $('#location').typeahead(null, {
   displayKey: 'city',
   source: bestPictures.ttAdapter()
 });
+
+// With JQuery
+$("#timeLimitVal").slider({
+	formatter: function(value) {
+		return value;
+	}                 
+}, initializeFields());
+
+/*
+$(document).ready(function() {
+  initializeFields();
+});
+*/
+
+/*
+$(function() {
+    $(".preload").fadeOut(500, function() {
+        $("#full-container").fadeIn(500);        
+    });
+});
+*/
+
+$("#timeLimitVal").on("change", function(changeEvt) {
+	$("#timeLimitValText").text(changeEvt.value.newValue);
+});
+
+$("#useTimeLimit").click(function() {
+	if(this.checked) {
+		// With JQuery
+		$("#timeLimitVal").slider("enable");
+    $("#timeLimitVal").attr("disabled", false);
+	}
+	else {
+		// With JQuery
+		$("#timeLimitVal").slider("disable");
+    $("#timeLimitVal").attr("disabled", true);
+	}
+});
+
+
+function initializeFields() {
+  timeLimitValText = ($("#timeLimitVal").val()!= "")?$("#timeLimitVal").val():45;
+  $("#timeLimitValText").text(timeLimitValText);
+}
+
+
+/*
+function isSliderEnabled() {
+  if ($("#useTimeLimit").checked) {
+    $("#timeLimitVal").slider("enable");
+  }
+  	else {
+  		// With JQuery
+  		$("#timeLimitVal").slider("disable");
+    }
+}
+*/

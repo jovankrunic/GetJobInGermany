@@ -42,23 +42,29 @@ class JobRepository extends EntityRepository
     }
     
     // return Query when $category is not set, using $skill and $location string parameters which can be empty - there are 4 posible variants
-    private function getQueryWithoutCategory($skill, $location) {
+    private function getQueryWithoutCategory($skill, $location, $startDate) {
         if ($skill!="" && $location!="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.location) AGAINST(:location) > 0.8')
                  ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('skill', $skill)
                  ->setParameter('location', $location)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
+            #     ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();
         }
         else if ($skill!="" && $location=="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('skill', $skill)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
+            #     ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();
             
         }
@@ -66,13 +72,19 @@ class JobRepository extends EntityRepository
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
                  ->where('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('location', $location)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
+            #     ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();            
         }
         else {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
                  ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();     
         }
@@ -81,7 +93,7 @@ class JobRepository extends EntityRepository
     }
     
     // return Query when $category is set, using $skill and $location string parameters which can be empty - there are 4 posible variants
-    private function getQueryWithCategory($skill, $location, $category) {
+    private function getQueryWithCategory($skill, $location, $category, $startDate) {
         if ($skill!="" && $location!="") {
             $jSearchQuery = $this->createQueryBuilder('j')
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
@@ -89,10 +101,12 @@ class JobRepository extends EntityRepository
                  ->where('c.slug = :category')
                  ->andWhere('MATCH(j.location) AGAINST(:location) > 0.8')
                  ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('skill', $skill)
                  ->setParameter('location', $location)
                  ->setParameter('category', $category)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
                  ->getQuery();
         }
         else if ($skill!="" && $location=="") {
@@ -101,9 +115,11 @@ class JobRepository extends EntityRepository
                  ->leftJoin('j.category','c')
                  ->where('c.slug = :category')
                  ->andWhere('MATCH(j.title,j.description) AGAINST(:skill) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('skill', $skill)
                  ->setParameter('category', $category)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))                 
                  ->getQuery();
         }
         else if ($skill=="" && $location!="") {
@@ -112,9 +128,11 @@ class JobRepository extends EntityRepository
                  ->leftJoin('j.category','c')
                  ->where('c.slug = :category')
                  ->andWhere('MATCH(j.location) AGAINST(:location) > 0.8')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('location', $location)
                  ->setParameter('category', $category)
-                 ->addOrderBy('j.publishedDate', 'DESC')
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
                  ->getQuery();
         }
         else {
@@ -122,7 +140,10 @@ class JobRepository extends EntityRepository
                  ->select('partial j.{id,title,company,slug,publishedDate,city,moreCities}, c')
                  ->leftJoin('j.category','c')
                  ->where('c.slug = :category')
+                 ->andWhere('j.publishedDate BETWEEN :begin AND :end')
                  ->setParameter('category', $category)
+                 ->setParameter('begin', $startDate)
+                 ->setParameter('end', new \DateTime('now'))
                  ->addOrderBy('j.publishedDate', 'DESC')
                  ->getQuery();        
         }
@@ -131,15 +152,20 @@ class JobRepository extends EntityRepository
     }
     
     // return "paginated" jobs using search criteria - parameters: skill (keyword), location, category and current page (for pagination)
-    public function getJobsBySearchCriteria($skill, $location, $category, $currentPage=1) {
-        
-        if ($category=="") {
-            $jSearchQuery = $this->getQueryWithoutCategory($skill,$location);
-        }
-        
-        else {
-            $jSearchQuery = $this->getQueryWithCategory($skill,$location,$category);
-        }
+    public function getJobsBySearchCriteria($skill, $location, $category, $useTimeLimit, $timeLimitVal, $currentPage=1) {
+      
+      if ($useTimeLimit!="") {
+        $startDate = $this->getDateXDaysAgo($timeLimitVal);
+      }
+      else {
+        $startDate = new \DateTime('2000-01-01');
+      }
+      if ($category=="") {
+        $jSearchQuery = $this->getQueryWithoutCategory($skill, $location, $startDate);
+      }
+      else {
+        $jSearchQuery = $this->getQueryWithCategory($skill, $location, $category, $startDate);
+      }
 
       $paginator = $this->paginate($jSearchQuery, $currentPage);
 
@@ -248,6 +274,11 @@ class JobRepository extends EntityRepository
 
         return $qj->getQuery()
                 ->getResult();
+    }
+    
+    private function getDateXDaysAgo($xDays) {
+      $startDate = time();
+      return date('Y-m-d', strtotime('-'.$xDays.' day', $startDate));
     }
     
 }

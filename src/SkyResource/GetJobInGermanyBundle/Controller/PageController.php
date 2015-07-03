@@ -153,6 +153,8 @@ class PageController extends Controller
         
         $keyword = $search->getKeyword();
         $location = $search->getLocation();
+        $useTimeLimit = $search->getUseTimeLimit();
+        $timeLimitVal = $search->gettimeLimitVal();
         
     //  $category = $request->query->get('category');
         $page = $request->query->get('page');
@@ -162,7 +164,7 @@ class PageController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $jobs = $em->getRepository('GetJobInGermanyBundle:Job')
-                    ->getJobsBySearchCriteria($keyword, $location, $category, $page);
+                    ->getJobsBySearchCriteria($keyword, $location, $category, $useTimeLimit, $timeLimitVal, $page);
                     
         $totalNumberOfJobs = count($jobs);
          

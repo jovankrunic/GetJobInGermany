@@ -9,7 +9,7 @@
 		  <div class="page-header">  
             <h1>Search through {{ numberOfJobs.all|number_format(0,',', '.') }} jobs</h1>
           </div>
-		  <form class="form-inline" action="{{ path('GetJobInGermanyBundle_search') }}" method="get" {{ form_enctype(form) }}>
+		  <form class="form-inline" action="{{ path('GetJobInGermanyBundle_search',{'timeLimit': 1, 'timeLimitVal': 45}) }}" method="get" {{ form_enctype(form) }}>
 		    	<div class="row big-labels">
 				  <div class="col-sm-6">
 					<h4>Keyword or position (in German)</h4>
@@ -20,15 +20,22 @@
 				</div>
 				<div class="row">
 					<div class="form-group col-md-6 col-sm-5">
-					{{ form_row(form.keyword, {'attr': {'class': 'form-control', 'class': 'keyahead', 'placeholder': 'What?', 'autocomplete': 'off' }}) }}
+					{{ form_row(form.keyword, {'attr': {'class': 'form-control', 'placeholder': 'What?', 'autocomplete': 'off', 'data-provide':'typeahead' }}) }}
 					</div>
 					<div class="form-group col-sm-4">
-          {{ form_row(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Where?', 'autocomplete': 'off' }}) }}
+          {{ form_row(form.location, {'attr': {'class': 'form-control', 'placeholder': 'Where?', 'autocomplete': 'off' , 'data-provide':'typeahead'}}) }}
 					</div>
-          {{ form_rest(form) }}
 			    <div class="form-group col-sm-2">
 			    <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span>&nbsp;Search</button>
 			    </div>
+				</div>
+        <div class="row slider-container hidden">
+				  <div class="form-group col-sm-6">
+						<p>{{ form_row(form.useTimeLimit, {'attr': {'autocomplete': 'off', 'checked':'checked'}}) }}&nbsp;Published during previous <span id="timeLimitValText" class="slider-number">45</span>&nbsp;days</p>
+				  </div>
+					<div class="form-group col-sm-6">
+						{{ form_row(form.timeLimitVal, {'attr': {'autocomplete': 'off' , 'data-slider-id':'timeSlideSlider', 'data-slider-min':'1', 'data-slider-max':'90', 'data-slider-step':'1', 'data-slider-value':'45', 'data-slider-enabled':'true'}}) }}
+					 </div>
 				</div>
 		  </form>
 		</div>

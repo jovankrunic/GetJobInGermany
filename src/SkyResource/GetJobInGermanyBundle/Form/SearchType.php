@@ -12,6 +12,8 @@ class SearchType extends AbstractType
     {
         $builder->add('keyword', 'text', array('label' => 'Keyword or position (in German)', 'required' => false));
         $builder->add('location', 'search', array('required' => false));
+        $builder->add('timeLimitVal', 'integer', array('required' => false, 'label' => false, 'max_length'=>3));
+        $builder->add('useTimeLimit', 'checkbox', array('required' => false, 'label' => false));
     }
 
     public function getName()

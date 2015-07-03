@@ -12,6 +12,10 @@ class Search
 
     protected $location;
     
+    protected $timeLimitVal;
+    
+    protected $useTimeLimit;
+    
 
     public function getKeyword()
     {
@@ -31,5 +35,25 @@ class Search
     public function setLocation($location)
     {
         $this->location = $location;
+    }
+    
+    public function gettimeLimitVal()
+    {
+        return $this->timeLimitVal;
+    }
+
+    public function setTimeLimitVal($timeLimitVal)    {
+        
+        $this->timeLimitVal = $timeLimitVal;
+    }
+    
+    public function getUseTimeLimit()
+    {
+        return $this->useTimeLimit;
+    }
+
+    public function setUseTimeLimit($useTimeLimit)
+    {
+        $this->useTimeLimit = $useTimeLimit;
     }
 }
