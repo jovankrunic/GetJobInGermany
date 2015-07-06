@@ -49,13 +49,16 @@ $(document).ready(function() {
 });
 */
 
-/*
 $(function() {
-    $(".preload").fadeOut(500, function() {
-        $("#full-container").fadeIn(500);        
-    });
+  $("body").fadeIn(220);
+  
+  $('#to-top').click(function(e){
+    e.preventDefault();
+    $('body').animate({
+        scrollTop: 0
+    }, 2000);
+  });
 });
-*/
 
 $("#timeLimitVal").on("change", function(changeEvt) {
 	$("#timeLimitValText").text(changeEvt.value.newValue);
@@ -79,7 +82,6 @@ function initializeFields() {
   timeLimitValText = ($("#timeLimitVal").val()!= "")?$("#timeLimitVal").val():45;
   $("#timeLimitValText").text(timeLimitValText);
 }
-
 
 /*
 function isSliderEnabled() {

@@ -11,3 +11,6 @@ services:
         class: Twig_Extensions_Extension_Intl
         tags:
             - { name: twig.extension }
+    hallo_service:
+        class: SkyResource\GetJobInGermanyBundle\Services\HalloService
+        arguments: ["@mailer"]

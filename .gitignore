@@ -8,6 +8,8 @@
 *.swp
 *.swo
 *~
+# Sitemap files
+/web/sitemap*
 
 # Cache and logs (Symfony2)
 /app/cache/*

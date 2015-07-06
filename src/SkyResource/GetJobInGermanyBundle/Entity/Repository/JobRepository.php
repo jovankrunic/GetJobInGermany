@@ -7,7 +7,6 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use SkyResource\GetJobInGermanyBundle\Entity\Job;
 
-
 /**
  * JobRepository
  */
@@ -152,19 +151,17 @@ class JobRepository extends EntityRepository
     }
     
     // return "paginated" jobs using search criteria - parameters: skill (keyword), location, category and current page (for pagination)
-    public function getJobsBySearchCriteria($skill, $location, $category, $useTimeLimit, $timeLimitVal, $currentPage=1) {
+    public function getJobsBySearchCriteria($search, $category, $currentPage=1) {
       
-      if ($useTimeLimit!="") {
-        $startDate = $this->getDateXDaysAgo($timeLimitVal);
-      }
-      else {
-        $startDate = new \DateTime('2000-01-01');
-      }
+        $keyword = $search->getKeyword();
+        $location = $search->getLocation();
+        $startDate = $search->calculateStartDate($search->getTimeLimitVal());
+        
       if ($category=="") {
-        $jSearchQuery = $this->getQueryWithoutCategory($skill, $location, $startDate);
+        $jSearchQuery = $this->getQueryWithoutCategory($keyword, $location, $startDate);
       }
       else {
-        $jSearchQuery = $this->getQueryWithCategory($skill, $location, $category, $startDate);
+        $jSearchQuery = $this->getQueryWithCategory($keyword, $location, $category, $startDate);
       }
 
       $paginator = $this->paginate($jSearchQuery, $currentPage);
@@ -274,11 +271,6 @@ class JobRepository extends EntityRepository
 
         return $qj->getQuery()
                 ->getResult();
-    }
-    
-    private function getDateXDaysAgo($xDays) {
-      $startDate = time();
-      return date('Y-m-d', strtotime('-'.$xDays.' day', $startDate));
     }
     
 }

@@ -151,11 +151,6 @@ class PageController extends Controller
         $data = array_intersect_key($data, $children);
         $form->bind($data);
         
-        $keyword = $search->getKeyword();
-        $location = $search->getLocation();
-        $useTimeLimit = $search->getUseTimeLimit();
-        $timeLimitVal = $search->gettimeLimitVal();
-        
     //  $category = $request->query->get('category');
         $page = $request->query->get('page');
         
@@ -164,7 +159,7 @@ class PageController extends Controller
         $em = $this->getDoctrine()->getManager();
         
         $jobs = $em->getRepository('GetJobInGermanyBundle:Job')
-                    ->getJobsBySearchCriteria($keyword, $location, $category, $useTimeLimit, $timeLimitVal, $page);
+                    ->getJobsBySearchCriteria($search, $category, $page);
                     
         $totalNumberOfJobs = count($jobs);
          

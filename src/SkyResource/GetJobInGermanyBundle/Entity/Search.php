@@ -56,4 +56,17 @@ class Search
     {
         $this->useTimeLimit = $useTimeLimit;
     }
+
+// calculate and return exact date from timeLimitVal ("days ago" variable) we get (or don't get) from user  
+    public function calculateStartDate($daysAgo)
+    {
+        if ($daysAgo==null) {
+             $startDate = new \DateTime("2000-01-01");
+        }
+        else {
+        $currentDate = time();
+        $startDate = new \DateTime(date('Y-m-d', strtotime('-'.$daysAgo.' day', $currentDate)));
+        }
+        return $startDate;
+    }
 }
